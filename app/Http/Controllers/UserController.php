@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Book;
 class UserController extends Controller
 {
-    public function getDataUser(){
-        $nama = 'shinta';
-        $email = 'sintayln0302@gmail.com';
-        
-    }   
+    public function index()
+    {
+        $book = Book::all();
+        return view('welcome', compact('book'));
+    }
 }
