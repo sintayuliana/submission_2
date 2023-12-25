@@ -1,25 +1,28 @@
 <?php
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\Pengunjung\PengunjungController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+        Route::post('save-data',  ['PegawaiController'::class, 'saveDataPegawai']);
+        Route::delete('delete-data',  ['PegawaiController'::class, 'deleteDataPegawai']);
+    ;
+;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+    Route::group(['prefix' => 'pengunjung'], function () {
+        Route::get('get-data',  ['PengunjungController'::class, 'getPengunjung']);
+        Route::post('save-data',  ['PengunjungController'::class, 'savePengunjung']);
+        Route::delete('delete-data',  ['PengunjungController'::class, 'deletePengunjung']);
+    });
+;
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('get-data',  ['UserController'::class, 'getDataUser']);
+    Route::post('create-data', ['UserController'::class, 'createDataUser']);
+    Route::put('update-data', ['UserController'::class, 'updateDataUser']);
+    Route::delete('delete-data', ['UserController'::class, 'deleteDataUser']);
 });
-Route::get('book', [BookController::class, 'get']);
-Route::post('book', [BookController::class, 'store']);
-Route::get('book/{id}', [BookController::class, 'show']);
-Route::put('book/{id}', [BookController::class, 'update']);
-Route::delete('book/{id}', [BookController::class, 'destroy']);
